@@ -2,13 +2,12 @@ package com.piggybank;
 
 import com.piggybank.model.Account;
 import com.piggybank.model.Search;
+import com.piggybank.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -23,8 +22,8 @@ public class AccountController {
     @Value("${spring.application.name}")
     String appName;
 
-    @PostMapping("/")
-    public String homePagePost(Model model , @ModelAttribute Search search) {
+    @GetMapping("/search")
+    public String homePagePost(Model model , @ModelAttribute Search search ) {
         System.out.println("searchText " + search);
         if(search != null && search.getText().length() > 0) {
             List<Account> accountList = accountService.getCustomerCard(search.getText());
@@ -48,10 +47,14 @@ public class AccountController {
     }
 
 
-    @GetMapping("/account-transactions/{id}")
-    public String accountTransactions(Model model) {
-        model.addAttribute("appName", appName);
-        return "home";
+    @GetMapping("/transactions-details")
+    public String accountTransactions(Model model , @RequestParam BigInteger accountId,@ModelAttribute Search search) {
+        List<Transaction> transactions = accountService.getTransactions(accountId);
+        Account account = accountService.getAccount(accountId);
+        model.addAttribute("account",account);
+        model.addAttribute("transactions",transactions);
+        model.addAttribute("search" , search);
+        return "transactions";
     }
 
 }

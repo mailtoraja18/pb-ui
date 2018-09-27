@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>PiggyBank!</title>
+</head>
+<body>
+<div class="container">
+    <!-- Image and text -->
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="#">
+            <img src="/images/pig.svg" width="30" height="50" class="d-inline-block align-center" alt="">
+            PiggyBank
+        </a>
+    </nav>
+
+    <br/>
+    <h4> <a th:href="@{/search(text=${account.customer.emailAddress.value})}"> Search </a> &gt; Accounts &gt; <span th:text="${account.id}"/> &gt; Transactions </h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Txn Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+            <div th:each="transaction: ${transactions}" class="row">
+                <tr>
+                    <td> <span th:text="${transaction.txnDate}"/></td>
+                    <td> <span th:text="${transaction.category}"/></td>
+                    <td> <span th:text="${transaction.type}"/></td>
+                    <td> <span th:text="${transaction.amount}"/></td>
+                </tr>
+            </div>
+        </tbody>
+    </table>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</body>
+</html>
